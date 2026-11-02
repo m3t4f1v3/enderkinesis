@@ -102,7 +102,7 @@ tasks.register("downloadSselithModels") {
             }
         }
         modelsDir.mkdirs()
-        fetch("https://opennlp.sourceforge.net/models-1.5/en-pos-maxent.bin", posModel)
+        fetch("https://ixpeering.dl.sourceforge.net/project/opennlp/models-1.5/en-pos-maxent.bin?viasf=1&fid=d25fde18ec522bad&e=1793711931&st=MJGtZ7L-QmDmgawDgCfETw", posModel)
         fetch("https://raw.githubusercontent.com/richardwilly98/elasticsearch-opennlp-auto-tagging/master/src/main/resources/models/en-lemmatizer.dict", lemmaDict)
     }
 }

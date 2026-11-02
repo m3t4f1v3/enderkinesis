@@ -14,12 +14,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
  *
  * **Target gotcha:** {@link LevelTimeAccess} is the only valid mixin target — 1.20.1 declares
  * {@code getTimeOfDay(F)F} as a default method on this interface, NOT on Level/ClientLevel.
+ * The handler is a public {@code default} method because Forge's Mixin 0.8.5 rejects non-public
+ * interface mixin members outright, dropping the whole mixin.
  */
 @Mixin(LevelTimeAccess.class)
 public interface LevelTimeAccessGetTimeOfDayWohlonBiomeMixin {
 
     @Inject(method = "getTimeOfDay(F)F", at = @At("RETURN"), cancellable = true)
-    private void enderkinesis$blendWohlonTimeOfDay(float partialTick, CallbackInfoReturnable<Float> cir) {
+    default void enderkinesis$blendWohlonTimeOfDay(float partialTick, CallbackInfoReturnable<Float> cir) {
         if (WohlonBiomeSkyState.getCurrentBlend() <= 0f) return;
         // The integrated server shares the JVM, so its levels and WorldGenRegions also reach this.
         Object self = this;

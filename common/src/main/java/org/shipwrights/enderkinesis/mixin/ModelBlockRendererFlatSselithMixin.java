@@ -34,11 +34,15 @@ import org.spongepowered.asm.mixin.injection.At;
 @Mixin(ModelBlockRenderer.class)
 public abstract class ModelBlockRendererFlatSselithMixin {
 
-    // Method name only (no descriptor): Forge's tesselateWithoutAO has 12 args
-    // (adds ModelData + RenderType), Fabric's has 10. Mixin's fuzzy match picks the
-    // right method per platform.
+    // Forge's 10-arg tesselateWithoutAO is a deprecated delegate to its own 12-arg
+    // overload (adds ModelData + RenderType). The bare name is pinned to the vanilla
+    // descriptor by the refmap, so the Forge overload has to be listed explicitly; on
+    // Fabric it simply matches nothing.
     @WrapOperation(
-        method = "tesselateWithoutAO",
+        method = {
+            "tesselateWithoutAO",
+            "tesselateWithoutAO(Lnet/minecraft/world/level/BlockAndTintGetter;Lnet/minecraft/client/resources/model/BakedModel;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;ZLnet/minecraft/util/RandomSource;JILnet/minecraftforge/client/model/data/ModelData;Lnet/minecraft/client/renderer/RenderType;)V"
+        },
         at = @At(
             value = "INVOKE",
             target = "Lnet/minecraft/client/renderer/LevelRenderer;getLightColor(Lnet/minecraft/world/level/BlockAndTintGetter;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;)I"

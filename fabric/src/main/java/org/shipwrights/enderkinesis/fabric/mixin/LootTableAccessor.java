@@ -1,4 +1,4 @@
-package org.shipwrights.enderkinesis.mixin;
+package org.shipwrights.enderkinesis.fabric.mixin;
 
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;

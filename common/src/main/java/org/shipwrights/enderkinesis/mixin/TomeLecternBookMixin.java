@@ -19,13 +19,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
  * {@code fromItem} call is given a real written book, so it doesn't re-enter this branch.
  *
  * {@code BookAccess} is an interface, so this mixin must itself be an interface and the injector a
- * {@code private static} method (Java 17 interface members).
+ * static method. It must be {@code public}: Forge's Mixin 0.8.5 rejects non-public interface mixin
+ * members outright, dropping the whole mixin.
  */
 @Mixin(BookViewScreen.BookAccess.class)
 public interface TomeLecternBookMixin {
 
     @Inject(method = "fromItem", at = @At("HEAD"), cancellable = true)
-    private static void enderkinesis$tomeAsBook(
+    static void enderkinesis$tomeAsBook(
         ItemStack stack, CallbackInfoReturnable<BookViewScreen.BookAccess> cir
     ) {
         if (stack.getItem() instanceof TomeItem tome) {

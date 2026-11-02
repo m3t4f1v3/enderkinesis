@@ -27,8 +27,15 @@ import org.spongepowered.asm.mixin.injection.At;
 @Mixin(ParticleEngine.class)
 public abstract class ParticleEngineCloakingMixin {
 
+    // Forge turns vanilla's 5-arg render into a deprecated delegate and moves the loop
+    // into its own overload that takes a Frustum. The bare "render" is pinned to the
+    // vanilla descriptor by the refmap, so the Forge overload has to be listed explicitly;
+    // on Fabric it simply matches nothing.
     @WrapOperation(
-        method = "render",
+        method = {
+            "render",
+            "render(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource$BufferSource;Lnet/minecraft/client/renderer/LightTexture;Lnet/minecraft/client/Camera;FLnet/minecraft/client/renderer/culling/Frustum;)V"
+        },
         at = @At(value = "INVOKE",
             target = "Lnet/minecraft/client/particle/Particle;render(Lcom/mojang/blaze3d/vertex/VertexConsumer;Lnet/minecraft/client/Camera;F)V")
     )

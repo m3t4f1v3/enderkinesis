@@ -3,8 +3,8 @@ package org.shipwrights.enderkinesis.forge
 import dev.architectury.platform.forge.EventBuses
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.fml.common.Mod
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext
 import net.minecraftforge.fml.loading.FMLEnvironment
+import thedarkcolour.kotlinforforge.KotlinModLoadingContext
 import org.shipwrights.enderkinesis.EnderkinesisMod
 import org.shipwrights.enderkinesis.forge.client.EnderkinesisModForgeClient
 import org.shipwrights.enderkinesis.forge.compat.curios.CuriosCompat
@@ -17,7 +17,8 @@ import org.shipwrights.enderkinesis.forge.compat.curios.CuriosCompat
 @Mod(EnderkinesisMod.MOD_ID)
 class EnderkinesisModForge {
     init {
-        val modEventBus = FMLJavaModLoadingContext.get().modEventBus
+        // modLoader is kotlinforforge, so the active context is KFF's, not FMLJavaModLoadingContext.
+        val modEventBus = KotlinModLoadingContext.get().getKEventBus()
         EventBuses.registerModEventBus(EnderkinesisMod.MOD_ID, modEventBus)
 
         EnderkinesisMod.init()

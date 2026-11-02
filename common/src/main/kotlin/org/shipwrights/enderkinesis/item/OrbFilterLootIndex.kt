@@ -16,7 +16,7 @@ import net.minecraft.world.level.storage.loot.entries.TagEntry
 import org.shipwrights.enderkinesis.mixin.CompositeEntryBaseAccessor
 import org.shipwrights.enderkinesis.mixin.LootItemAccessor
 import org.shipwrights.enderkinesis.mixin.LootPoolAccessor
-import org.shipwrights.enderkinesis.mixin.LootTableAccessor
+import org.shipwrights.enderkinesis.platform.LootPlatform
 import org.shipwrights.enderkinesis.mixin.TagEntryAccessor
 import java.util.IdentityHashMap
 import java.util.WeakHashMap
@@ -152,8 +152,7 @@ object OrbFilterLootIndex {
         visitedEntries: MutableSet<LootPoolEntryContainer>,
     ) {
         if (!visitedTables.add(table)) return
-        val pools = (table as LootTableAccessor).`enderkinesis$getPools`() ?: return
-        for (pool in pools) {
+        for (pool in LootPlatform.pools(table)) {
             val entries = (pool as LootPoolAccessor).`enderkinesis$getEntries`() ?: continue
             for (entry in entries) {
                 collectItemsFromEntry(server, entry, sink, visitedTables, visitedEntries)

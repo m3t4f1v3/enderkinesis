@@ -213,7 +213,6 @@
     "LivingEntityWeyyeFruitUninterruptibleMixin",
     "LootItemAccessor",
     "LootPoolAccessor",
-    "LootTableAccessor",
     "LootingEnchantFunctionDisintegrationMixin",
     "NaturalSpawnerSkipMixin",
     "PistonBaseBlockCommandSignalMixin",
